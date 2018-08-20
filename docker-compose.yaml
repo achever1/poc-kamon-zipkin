@@ -1,0 +1,30 @@
+---
+version: '3'
+
+services:
+
+  s1:
+    image: poc-kamon-zipkin:1.0-SNAPSHOT
+    environment:
+      APPLICATION_NAME: service1
+    ports:
+    - 9000:9000
+
+  s2:
+    image: poc-kamon-zipkin:1.0-SNAPSHOT
+    environment:
+      APPLICATION_NAME: service2
+    ports:
+    - 9001:9000
+
+  s3:
+    image: poc-kamon-zipkin:1.0-SNAPSHOT
+    environment:
+      APPLICATION_NAME: service3
+    ports:
+    - 9002:9000
+
+  zipkin:
+    image: openzipkin/zipkin
+    ports:
+    - 9411:9411
