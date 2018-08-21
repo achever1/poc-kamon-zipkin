@@ -21,7 +21,8 @@ libraryDependencies ++= Seq(
   "io.kamon" %% "kamon-akka-2.5" % "1.0.1",
   "io.kamon" %% "kamon-prometheus" % "1.0.0",
   "io.kamon" %% "kamon-zipkin" % "1.0.0",
-  "io.kamon" %% "kamon-play-2.6" % "1.1.0"
+  "io.kamon" %% "kamon-play-2.6" % "1.1.0",
+  "io.kamon" %% "kamon-scala-future" % "1.0.0"
 )
 
 // Adds additional packages into Twirl

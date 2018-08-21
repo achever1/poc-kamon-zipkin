@@ -4,17 +4,17 @@ import actors.{ComputeCommand, ParallelComputerActor}
 import akka.actor.{ActorSystem, Props}
 import business.ParallelComputer
 import javax.inject._
+import kamon.Kamon
 import play.api.libs.ws.WSClient
 import play.api.libs.ws.ahc.AhcCurlRequestLogger
 import play.api.mvc._
 
 import scala.concurrent.{ExecutionContext, Future}
 @Singleton
-class Controller @Inject()(
-    cc: ControllerComponents,
-    ws: WSClient,
-    parallelComputer: ParallelComputer,
-    system: ActorSystem)(implicit ec: ExecutionContext)
+class Controller @Inject()(cc: ControllerComponents,
+                           ws: WSClient,
+                           parallelComputer: ParallelComputer,
+                           system: ActorSystem)(implicit ec: ExecutionContext)
     extends AbstractController(cc) {
 
   val props = Props(new ParallelComputerActor(parallelComputer))
@@ -28,7 +28,10 @@ class Controller @Inject()(
   }
 
   def endpoint2 = Action.async { implicit request =>
-
+    // Compute with futures
+    val span = Kamon.buildSpan("compute globally").start()
+    parallelComputer.compute()
+    span.finish()
     // Compute with futures in an actor
     actor ! ComputeCommand()
 
