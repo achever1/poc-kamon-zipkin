@@ -7,6 +7,8 @@ services:
     image: poc-kamon-zipkin:1.0-SNAPSHOT
     environment:
       APPLICATION_NAME: service1
+      ZOOKEEPER_ADDRESSES: zookeeper:2181
+      CONSTRUCTR_ZOOKEEPER_PATH: /constructr-poc
     ports:
     - 9000:9000
 
@@ -14,6 +16,8 @@ services:
     image: poc-kamon-zipkin:1.0-SNAPSHOT
     environment:
       APPLICATION_NAME: service2
+      ZOOKEEPER_ADDRESSES: zookeeper:2181
+      CONSTRUCTR_ZOOKEEPER_PATH: /constructr-poc
     ports:
     - 9001:9000
 
@@ -21,6 +25,8 @@ services:
     image: poc-kamon-zipkin:1.0-SNAPSHOT
     environment:
       APPLICATION_NAME: service3
+      ZOOKEEPER_ADDRESSES: zookeeper:2181
+      CONSTRUCTR_ZOOKEEPER_PATH: /constructr-poc
     ports:
     - 9002:9000
 
@@ -28,3 +34,8 @@ services:
     image: openzipkin/zipkin
     ports:
     - 9411:9411
+
+  zookeeper:
+    image: wurstmeister/zookeeper:3.4.6
+    ports:
+    - 2181:2181
