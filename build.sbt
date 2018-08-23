@@ -1,9 +1,17 @@
+import sbt.{Credentials, Path, Resolver}
+
 name := """poc-kamon-zipkin"""
 organization := "org.talend"
 
 version := "1.0-SNAPSHOT"
 
-lazy val root = (project in file(".")).enablePlugins(PlayScala, JavaAgent)
+credentials += Credentials(Path.userHome / ".ivy2" / ".credentials")
+
+lazy val root = (project in file("."))
+  .enablePlugins(PlayScala, JavaAgent)
+  .settings(resolvers ++= Seq(
+    "Talend Releases" at "https://artifacts-zl.talend.com/nexus/content/repositories/releases"))
+
 javaAgents += "org.aspectj" % "aspectjweaver" % "1.8.13"
 javaOptions in Universal += "-Dorg.aspectj.tracing.factory=default"
 
@@ -20,8 +28,7 @@ libraryDependencies += "com.typesafe.akka" %% "akka-cluster-metrics" % "2.5.14"
 libraryDependencies += "de.heikoseeberger" %% "constructr" % "0.19.0" % Runtime
 libraryDependencies += "com.lightbend.constructr" %% "constructr-coordination-zookeeper" % "0.4.1" % Runtime
 
-
-
+libraryDependencies += "io.kamon" %% "kamon-zipkin-kafka" % "1.0.0"
 
 // Optional Dependencies
 libraryDependencies ++= Seq(
